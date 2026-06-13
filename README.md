@@ -83,20 +83,57 @@ FRONTEND_URL=http://localhost:3000
 
 ## Deployment
 
-### Frontend → Vercel (Free)
+Per the hosting plan: **Vercel** (frontend + admin UI), **Render or Railway** (backend), **Neon or Supabase** (PostgreSQL).
 
-1. Push code to GitHub
-2. Import repo in [vercel.com](https://vercel.com)
-3. Set root directory to `frontend`
+> **Note:** Local dev defaults to SQLite. Production must use PostgreSQL — set `DATABASE_URL` to your Neon/Supabase connection string.
+
+### 1. Database → Neon or Supabase (PostgreSQL)
+
+1. Create a free PostgreSQL project on [neon.tech](https://neon.tech) or [supabase.com](https://supabase.com)
+2. Copy the connection string (use the **pooled** URL on serverless if offered)
+3. Set `DATABASE_URL` in your backend env vars
+
+Seed the database once (from Render/Railway shell or locally pointing at prod DB):
+
+```bash
+cd backend
+python -m app.seed_data
+```
+
+### 2. Backend → Render or Railway
+
+**Render** (uses `render.yaml` in repo root):
+
+1. Connect GitHub repo at [render.com](https://render.com)
+2. Create a **Web Service** with root directory `backend`
+3. Set environment variables from `backend/.env.example`
+4. Start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+5. Set `FRONTEND_URL` to your Vercel URL (e.g. `https://collegesathi.vercel.app`)
+
+**Railway** alternative: deploy `backend` folder, same env vars and start command.
+
+### 3. Frontend + Admin → Vercel
+
+The admin panel is a Next.js route at `/admin` — it deploys **with the frontend**, not separately.
+
+1. Import repo at [vercel.com](https://vercel.com)
+2. Set **Root Directory** to `frontend`
+3. Add environment variable:
+   - `BACKEND_URL` = your Render/Railway API URL (e.g. `https://collegesathi-api.onrender.com`)
 4. Deploy
 
-### Backend → Railway (Free)
+Visit `https://your-app.vercel.app/admin` for the admin dashboard (email + password + OTP).
 
-1. Create project on [railway.app](https://railway.app)
-2. Add PostgreSQL service
-3. Deploy from GitHub (root: `backend`)
-4. Set environment variables
-5. Add start command: `uvicorn app.main:app --host 0.0.0.0 --port $PORT`
+### Environment checklist
+
+| Variable | Where | Purpose |
+|----------|-------|---------|
+| `DATABASE_URL` | Backend | PostgreSQL (Neon/Supabase) |
+| `SECRET_KEY` | Backend | JWT signing |
+| `FRONTEND_URL` | Backend | CORS (your Vercel URL) |
+| `BACKEND_URL` | Vercel | API proxy target |
+| `ADMIN_EMAIL` / `ADMIN_PASSWORD` | Backend | Admin login |
+| `SMTP_PASSWORD` | Backend | Admin OTP emails |
 
 ## Data
 

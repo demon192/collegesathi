@@ -1,9 +1,10 @@
 from pydantic_settings import BaseSettings
+from pydantic import field_validator
 from typing import Optional
 
 
 class Settings(BaseSettings):
-    # Database (defaults to SQLite for easy demo - switch to PostgreSQL for production)
+    # Database: SQLite for local dev; PostgreSQL (Neon/Supabase) for production
     DATABASE_URL: str = "sqlite:///./faraway.db"
     
     # Auth
@@ -15,6 +16,10 @@ class Settings(BaseSettings):
     GOOGLE_CLIENT_ID: Optional[str] = None
     GOOGLE_CLIENT_SECRET: Optional[str] = None
     
+    # Admin (set in production env vars)
+    ADMIN_EMAIL: str = "ishumehra1534@gmail.com"
+    ADMIN_PASSWORD: str = "Faraway@2026"
+    
     # Redis
     REDIS_URL: str = "redis://localhost:6379"
     
@@ -25,6 +30,14 @@ class Settings(BaseSettings):
     # App
     APP_NAME: str = "CollegeSathi"
     FRONTEND_URL: str = "http://localhost:3000"
+    
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def normalize_database_url(cls, value: str) -> str:
+        # Neon/Supabase often provide postgres://; SQLAlchemy expects postgresql://
+        if isinstance(value, str) and value.startswith("postgres://"):
+            return value.replace("postgres://", "postgresql://", 1)
+        return value
     
     class Config:
         env_file = ".env"

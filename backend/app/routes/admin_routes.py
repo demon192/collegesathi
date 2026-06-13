@@ -17,9 +17,9 @@ from email.mime.multipart import MIMEMultipart
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
 
-# Admin credentials (in production, use env vars)
-ADMIN_EMAIL = "ishumehra1534@gmail.com"
-ADMIN_PASSWORD_HASH = hashlib.sha256("Faraway@2026".encode()).hexdigest()
+
+def _admin_password_hash() -> str:
+    return hashlib.sha256(settings.ADMIN_PASSWORD.encode()).hexdigest()
 
 # In-memory OTP store (in production, use Redis)
 _otp_store: dict = {}  # {email: {"otp": str, "expires": float}}
@@ -76,11 +76,11 @@ def _send_otp_email(to_email: str, otp: str) -> bool:
 @router.post("/login")
 def admin_login(data: AdminLoginRequest):
     """Step 1: Verify admin email + password, then send OTP via email."""
-    if data.email != ADMIN_EMAIL:
+    if data.email != settings.ADMIN_EMAIL:
         raise HTTPException(status_code=401, detail="Invalid admin credentials")
     
     password_hash = hashlib.sha256(data.password.encode()).hexdigest()
-    if password_hash != ADMIN_PASSWORD_HASH:
+    if password_hash != _admin_password_hash():
         raise HTTPException(status_code=401, detail="Invalid admin credentials")
     
     # Generate OTP
@@ -101,7 +101,7 @@ def admin_login(data: AdminLoginRequest):
 @router.post("/verify-otp")
 def admin_verify_otp(data: AdminOTPVerifyRequest):
     """Step 2: Verify OTP and return admin token."""
-    if data.email != ADMIN_EMAIL:
+    if data.email != settings.ADMIN_EMAIL:
         raise HTTPException(status_code=401, detail="Invalid admin email")
     
     stored = _otp_store.get(data.email)
@@ -119,7 +119,7 @@ def admin_verify_otp(data: AdminOTPVerifyRequest):
     del _otp_store[data.email]
     
     # Create admin token
-    token = create_access_token({"sub": 0, "role": "admin", "email": ADMIN_EMAIL})
+    token = create_access_token({"sub": 0, "role": "admin", "email": settings.ADMIN_EMAIL})
     return {"access_token": token, "role": "admin"}
 
 
