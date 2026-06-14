@@ -1,11 +1,14 @@
 import axios from 'axios';
 
+const backendOrigin = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
+const apiBase = backendOrigin ? `${backendOrigin}/api` : '/api';
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: apiBase,
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 90000, // Render free tier cold starts can take 30–60s
+  timeout: 90000,
 });
 
 // Add auth token to requests

@@ -76,6 +76,13 @@ export default function AdminPage() {
     }
   }, []);
 
+  // Wake Render server when opening admin login (free tier sleeps after ~15 min)
+  useEffect(() => {
+    if (authStep === 'login') {
+      api.get('/health').catch(() => {});
+    }
+  }, [authStep]);
+
   // Load data when authenticated
   useEffect(() => {
     if (authStep === 'authenticated') {

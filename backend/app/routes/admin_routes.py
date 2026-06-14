@@ -12,6 +12,7 @@ import random
 import hashlib
 import time
 import smtplib
+from concurrent.futures import ThreadPoolExecutor, TimeoutError as FuturesTimeoutError
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -35,39 +36,50 @@ class AdminOTPVerifyRequest(BaseModel):
     otp: str
 
 
+def _send_otp_email_sync(to_email: str, otp: str) -> bool:
+    """Send OTP via Gmail SMTP (blocking — run with timeout wrapper)."""
+    msg = MIMEMultipart()
+    msg['From'] = settings.SMTP_EMAIL
+    msg['To'] = to_email
+    msg['Subject'] = f'CollegeSathi Admin OTP: {otp}'
+
+    body = f"""
+    <html>
+    <body style="font-family: Arial, sans-serif; padding: 20px;">
+        <div style="max-width: 400px; margin: 0 auto; text-align: center;">
+            <h2 style="color: #4f46e5;">CollegeSathi Admin Access</h2>
+            <p style="color: #6b7280;">Your one-time verification code is:</p>
+            <div style="font-size: 36px; font-weight: bold; letter-spacing: 8px; color: #1f2937; margin: 20px 0; padding: 16px; background: #f3f4f6; border-radius: 12px;">
+                {otp}
+            </div>
+            <p style="color: #9ca3af; font-size: 14px;">This code expires in 5 minutes.</p>
+        </div>
+    </body>
+    </html>
+    """
+    msg.attach(MIMEText(body, 'html'))
+
+    # Short timeout — Render can hang on SMTP for minutes without this
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, timeout=10) as server:
+        server.login(settings.SMTP_EMAIL, settings.SMTP_PASSWORD)
+        server.sendmail(settings.SMTP_EMAIL, to_email, msg.as_string())
+
+    print(f"✅ OTP email sent to {to_email}")
+    return True
+
+
 def _send_otp_email(to_email: str, otp: str) -> bool:
-    """Send OTP to admin email via Gmail SMTP."""
+    """Send OTP to admin email via Gmail SMTP (max ~15s, never blocks login indefinitely)."""
     if not settings.SMTP_PASSWORD:
-        print("⚠️ SMTP_PASSWORD not set in .env - cannot send email")
+        print("⚠️ SMTP_PASSWORD not set — skipping email, use OTP shown on screen")
         return False
     try:
-        msg = MIMEMultipart()
-        msg['From'] = settings.SMTP_EMAIL
-        msg['To'] = to_email
-        msg['Subject'] = f'🔐 CollegeSathi Admin OTP: {otp}'
-        
-        body = f"""
-        <html>
-        <body style="font-family: Arial, sans-serif; padding: 20px;">
-            <div style="max-width: 400px; margin: 0 auto; text-align: center;">
-                <h2 style="color: #4f46e5;">CollegeSathi Admin Access</h2>
-                <p style="color: #6b7280;">Your one-time verification code is:</p>
-                <div style="font-size: 36px; font-weight: bold; letter-spacing: 8px; color: #1f2937; margin: 20px 0; padding: 16px; background: #f3f4f6; border-radius: 12px;">
-                    {otp}
-                </div>
-                <p style="color: #9ca3af; font-size: 14px;">This code expires in 5 minutes. Do not share it with anyone.</p>
-            </div>
-        </body>
-        </html>
-        """
-        msg.attach(MIMEText(body, 'html'))
-        
-        with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
-            server.login(settings.SMTP_EMAIL, settings.SMTP_PASSWORD)
-            server.sendmail(settings.SMTP_EMAIL, to_email, msg.as_string())
-        
-        print(f"✅ OTP email sent to {to_email}")
-        return True
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            future = executor.submit(_send_otp_email_sync, to_email, otp)
+            return future.result(timeout=15)
+    except FuturesTimeoutError:
+        print("⚠️ Email sending timed out after 15s (Render may block SMTP)")
+        return False
     except Exception as e:
         print(f"⚠️ Email sending failed: {e}")
         return False
