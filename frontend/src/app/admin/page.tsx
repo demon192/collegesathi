@@ -247,7 +247,7 @@ export default function AdminPage() {
               {otpHint && (
                 <p className="mt-3 px-4 py-2 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-lg text-amber-700 dark:text-amber-400 text-sm">
                   Your OTP: <span className="font-mono font-bold text-lg">{otpHint}</span>
-                  <br/><span className="text-xs">(Email could not be sent — set SMTP_PASSWORD on Render)</span>
+                  <br/><span className="text-xs">(Gmail SMTP is blocked on Render — use the code above. Email OTP is not available on free hosting.)</span>
                 </p>
               )}
             </div>
