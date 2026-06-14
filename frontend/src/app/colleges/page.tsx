@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { Suspense, useState, useEffect, useCallback } from 'react';
 import { useSearchParams } from 'next/navigation';
 import api from '@/lib/api';
 import { College, FilterOptions, PaginatedResponse } from '@/types';
@@ -9,6 +9,16 @@ import FilterSidebar from '@/components/FilterSidebar';
 import Pagination from '@/components/Pagination';
 
 export default function CollegesPage() {
+  return (
+    <Suspense fallback={
+      <div className="max-w-7xl mx-auto px-4 py-16 text-center text-gray-500">Loading colleges...</div>
+    }>
+      <CollegesPageContent />
+    </Suspense>
+  );
+}
+
+function CollegesPageContent() {
   const searchParams = useSearchParams();
   
   const [colleges, setColleges] = useState<College[]>([]);

@@ -76,7 +76,7 @@ export default function AdminEditModal({ collegeId, onClose, onSaved }: AdminEdi
 
   const handleChange = (field: string, value: any) => {
     setForm({ ...form, [field]: value });
-    setChangedFields((prev) => new Set([...prev, field]));
+    setChangedFields((prev) => new Set([...Array.from(prev), field]));
   };
 
   const handleSave = async () => {
