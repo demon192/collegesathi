@@ -36,8 +36,8 @@ export default function WishlistPage() {
     return (
       <div className="max-w-3xl mx-auto px-4 py-20 text-center">
         <div className="text-5xl mb-4">❤️</div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-3">Your Wishlist</h1>
-        <p className="text-gray-500 mb-8">Sign in to save colleges and track their deadlines</p>
+        <h1 className="page-title mb-3">Your Wishlist</h1>
+        <p className="text-muted mb-8">Sign in to save colleges and track their deadlines</p>
         <Link href="/" className="btn-primary">Go to Home</Link>
       </div>
     );
@@ -46,12 +46,12 @@ export default function WishlistPage() {
   if (loading) {
     return (
       <div className="max-w-5xl mx-auto px-4 py-12">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Your Wishlist</h1>
+        <h1 className="page-title mb-8">Your Wishlist</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[1, 2, 3, 4].map((i) => (
             <div key={i} className="card p-5 animate-pulse">
-              <div className="h-5 bg-gray-200 rounded w-3/4 mb-3" />
-              <div className="h-4 bg-gray-100 rounded w-1/2" />
+              <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3" />
+              <div className="h-4 bg-gray-100 dark:bg-gray-800 rounded w-1/2" />
             </div>
           ))}
         </div>
@@ -63,16 +63,16 @@ export default function WishlistPage() {
     <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">❤️ Your Wishlist</h1>
-          <p className="text-gray-500 mt-1">{colleges.length} college{colleges.length !== 1 ? 's' : ''} saved</p>
+          <h1 className="page-title">❤️ Your Wishlist</h1>
+          <p className="text-muted mt-1">{colleges.length} college{colleges.length !== 1 ? 's' : ''} saved</p>
         </div>
       </div>
 
       {colleges.length === 0 ? (
         <div className="text-center py-16">
           <div className="text-5xl mb-4">📋</div>
-          <h3 className="text-xl font-semibold text-gray-900 mb-2">No colleges saved yet</h3>
-          <p className="text-gray-500 mb-6">Browse colleges and click the ❤️ to add them here</p>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No colleges saved yet</h3>
+          <p className="text-muted mb-6">Browse colleges and click the ❤️ to add them here</p>
           <Link href="/colleges" className="btn-primary">Browse Colleges</Link>
         </div>
       ) : (

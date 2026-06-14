@@ -86,8 +86,8 @@ export default function CollegeCard({ college }: CollegeCardProps) {
             disabled={wishlistLoading}
             className={`ml-3 p-2 rounded-full transition-all ${
               isWishlisted 
-                ? 'text-red-500 bg-red-50 hover:bg-red-100' 
-                : 'text-gray-400 hover:text-red-500 hover:bg-red-50'
+                ? 'text-red-500 bg-red-50 dark:bg-red-900/30 hover:bg-red-100 dark:hover:bg-red-900/50' 
+                : 'text-gray-400 dark:text-gray-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30'
             }`}
           >
             <svg className="w-5 h-5" fill={isWishlisted ? 'currentColor' : 'none'} viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -155,7 +155,7 @@ export default function CollegeCard({ college }: CollegeCardProps) {
           <div className="mt-2 flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
             <span>Accepts:</span>
             {college.exams_accepted.slice(0, 3).map((exam) => (
-              <span key={exam.id} className="font-medium text-primary-600">
+              <span key={exam.id} className="font-medium text-primary-600 dark:text-primary-400">
                 {exam.short_name}
               </span>
             ))}

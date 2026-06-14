@@ -29,7 +29,7 @@ export default function FilterSidebar({
     admission_status: true,
   });
 
-  if (!filters) return <div className="animate-pulse bg-gray-100 rounded-2xl h-96" />;
+  if (!filters) return <div className="animate-pulse bg-gray-100 dark:bg-gray-800 rounded-2xl h-96" />;
 
   const toggleSection = (key: string) => {
     setExpandedSections((prev) => ({ ...prev, [key]: !prev[key] }));

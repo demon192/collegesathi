@@ -70,12 +70,12 @@ export default function Navbar() {
 
               {isAuthenticated ? (
                 <div className="flex items-center gap-3">
-                  <span className="text-sm text-gray-600 hidden sm:block">
+                  <span className="text-sm text-gray-600 dark:text-gray-300 hidden sm:block">
                     Hi, {user?.name || user?.email?.split('@')[0] || 'Student'}
                   </span>
                   <button
                     onClick={logout}
-                    className="text-sm text-gray-500 hover:text-red-500 font-medium transition-colors"
+                    className="text-sm text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 font-medium transition-colors"
                   >
                     Logout
                   </button>

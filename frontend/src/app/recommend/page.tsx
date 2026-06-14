@@ -175,8 +175,8 @@ export default function RecommendPage() {
         {results.length === 0 ? (
           <div className="text-center py-16">
             <div className="text-4xl mb-4">😔</div>
-            <h3 className="text-xl font-semibold mb-2">No exact matches found</h3>
-            <p className="text-gray-500 mb-4">Try widening your criteria - maybe increase budget or add more states</p>
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No exact matches found</h3>
+            <p className="text-muted mb-4">Try widening your criteria - maybe increase budget or add more states</p>
             <button onClick={() => { setResults(null); setStep(0); }} className="btn-primary">
               Try Again
             </button>
@@ -208,7 +208,7 @@ export default function RecommendPage() {
             <span className="text-sm text-gray-500 dark:text-gray-400">Step {step + 1} of {STEPS.length}</span>
             <button
               onClick={() => handleSubmit()}
-              className="text-sm text-primary-600 hover:underline font-medium"
+              className="text-sm text-primary-600 dark:text-primary-400 hover:underline font-medium"
             >
               Skip to results →
             </button>

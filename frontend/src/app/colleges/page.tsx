@@ -123,8 +123,8 @@ function CollegesPageContent() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">All Colleges</h1>
-        <p className="text-gray-500 mt-1">
+        <h1 className="page-title">All Colleges</h1>
+        <p className="text-muted mt-1">
           {total} colleges found · Showing page {page} of {totalPages}
         </p>
       </div>
@@ -189,10 +189,10 @@ function CollegesPageContent() {
         {/* Mobile Filters */}
         {showMobileFilters && (
           <div className="lg:hidden fixed inset-0 z-50 bg-black/50" onClick={() => setShowMobileFilters(false)}>
-            <div className="absolute right-0 top-0 bottom-0 w-80 bg-white overflow-y-auto p-4" onClick={(e) => e.stopPropagation()}>
+            <div className="absolute right-0 top-0 bottom-0 w-80 bg-white dark:bg-[#1a1d2e] overflow-y-auto p-4" onClick={(e) => e.stopPropagation()}>
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-bold text-lg">Filters</h3>
-                <button onClick={() => setShowMobileFilters(false)} className="text-gray-500">✕</button>
+                <h3 className="font-bold text-lg text-gray-900 dark:text-white">Filters</h3>
+                <button onClick={() => setShowMobileFilters(false)} className="text-gray-500 dark:text-gray-400">✕</button>
               </div>
               <FilterSidebar
                 filters={filterOptions}
@@ -212,21 +212,21 @@ function CollegesPageContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {Array.from({ length: 8 }).map((_, i) => (
                 <div key={i} className="card p-5 animate-pulse">
-                  <div className="h-5 bg-gray-200 rounded w-3/4 mb-3" />
-                  <div className="h-4 bg-gray-100 rounded w-1/2 mb-4" />
+                  <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3" />
+                  <div className="h-4 bg-gray-100 dark:bg-gray-800 rounded w-1/2 mb-4" />
                   <div className="flex gap-2 mb-3">
-                    <div className="h-6 bg-gray-100 rounded-full w-16" />
-                    <div className="h-6 bg-gray-100 rounded-full w-20" />
+                    <div className="h-6 bg-gray-100 dark:bg-gray-800 rounded-full w-16" />
+                    <div className="h-6 bg-gray-100 dark:bg-gray-800 rounded-full w-20" />
                   </div>
-                  <div className="h-4 bg-gray-100 rounded w-full" />
+                  <div className="h-4 bg-gray-100 dark:bg-gray-800 rounded w-full" />
                 </div>
               ))}
             </div>
           ) : colleges.length === 0 ? (
             <div className="text-center py-16">
               <div className="text-4xl mb-4">🔍</div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No colleges found</h3>
-              <p className="text-gray-500 mb-4">Try adjusting your filters or search query</p>
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No colleges found</h3>
+              <p className="text-muted mb-4">Try adjusting your filters or search query</p>
               <button onClick={handleClearFilters} className="btn-primary">
                 Clear All Filters
               </button>

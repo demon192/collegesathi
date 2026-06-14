@@ -40,7 +40,7 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-primary-700">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-28 lg:pt-32 lg:pb-36">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur rounded-full text-white/90 text-sm mb-6">
               <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
@@ -59,11 +59,11 @@ export default function HomePage() {
               Built for first-generation students who deserve equal guidance.
             </p>
 
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 relative z-20">
               <Link href="/recommend" className="btn-primary text-center text-lg px-8 py-4 bg-white text-primary-700 hover:bg-gray-100 shadow-xl">
                 🎯 Find My Best Colleges
               </Link>
-              <Link href="/colleges" className="btn-secondary text-center text-lg px-8 py-4 border-white/30 text-white hover:bg-white/10 hover:border-white/50 hover:text-white">
+              <Link href="/colleges" className="hero-outline-btn text-center">
                 Browse All Colleges →
               </Link>
             </div>
@@ -71,8 +71,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-10">
+      {/* Stats — overlap hero slightly; extra hero padding keeps CTAs visible */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-14 relative z-10 mb-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
             { label: 'Colleges', value: '500+', icon: '🏫' },
@@ -82,8 +82,8 @@ export default function HomePage() {
           ].map((stat) => (
             <div key={stat.label} className="card p-5 text-center">
               <div className="text-2xl mb-1">{stat.icon}</div>
-              <div className="text-2xl font-bold text-gray-900">{stat.value}</div>
-              <div className="text-sm text-gray-500">{stat.label}</div>
+              <div className="text-2xl font-bold text-gray-900 dark:text-white">{stat.value}</div>
+              <div className="text-sm text-muted">{stat.label}</div>
             </div>
           ))}
         </div>
@@ -94,10 +94,10 @@ export default function HomePage() {
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-2xl font-bold text-gray-900">⚡ Closing Soon</h2>
-              <p className="text-gray-500 mt-1">Don't miss these deadlines!</p>
+              <h2 className="section-title">⚡ Closing Soon</h2>
+              <p className="text-muted mt-1">Don't miss these deadlines!</p>
             </div>
-            <Link href="/colleges?admission_status=Closing+Soon" className="text-primary-600 font-medium hover:underline text-sm">
+            <Link href="/colleges?admission_status=Closing+Soon" className="text-primary-600 dark:text-primary-400 font-medium hover:underline text-sm">
               View all →
             </Link>
           </div>
@@ -113,10 +113,10 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">🟢 Currently Open</h2>
-            <p className="text-gray-500 mt-1">Applications you can apply to right now</p>
+            <h2 className="section-title">🟢 Currently Open</h2>
+            <p className="text-muted mt-1">Applications you can apply to right now</p>
           </div>
-          <Link href="/colleges?admission_status=Open" className="text-primary-600 font-medium hover:underline text-sm">
+          <Link href="/colleges?admission_status=Open" className="text-primary-600 dark:text-primary-400 font-medium hover:underline text-sm">
             View all →
           </Link>
         </div>
@@ -125,13 +125,13 @@ export default function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="card p-5 animate-pulse">
-                <div className="h-5 bg-gray-200 rounded w-3/4 mb-3" />
-                <div className="h-4 bg-gray-100 rounded w-1/2 mb-4" />
+                <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3" />
+                <div className="h-4 bg-gray-100 dark:bg-gray-800 rounded w-1/2 mb-4" />
                 <div className="flex gap-2 mb-3">
-                  <div className="h-6 bg-gray-100 rounded-full w-16" />
-                  <div className="h-6 bg-gray-100 rounded-full w-20" />
+                  <div className="h-6 bg-gray-100 dark:bg-gray-800 rounded-full w-16" />
+                  <div className="h-6 bg-gray-100 dark:bg-gray-800 rounded-full w-20" />
                 </div>
-                <div className="h-4 bg-gray-100 rounded w-full" />
+                <div className="h-4 bg-gray-100 dark:bg-gray-800 rounded w-full" />
               </div>
             ))}
           </div>
@@ -161,40 +161,40 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 bg-white">
+      <footer className="border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-[#0f1117]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div>
-              <h4 className="font-semibold text-gray-900 mb-3">CollegeSathi</h4>
-              <p className="text-sm text-gray-500">
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-3">CollegeSathi</h4>
+              <p className="text-sm text-muted">
                 Equal guidance for every student, regardless of background.
               </p>
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 mb-3">Browse</h4>
-              <ul className="space-y-2 text-sm text-gray-500">
-                <li><Link href="/colleges" className="hover:text-primary-600">All Colleges</Link></li>
-                <li><Link href="/colleges?course_levels=UG" className="hover:text-primary-600">UG Courses</Link></li>
-                <li><Link href="/colleges?course_levels=PG" className="hover:text-primary-600">PG Courses</Link></li>
-                <li><Link href="/colleges?admission_status=Open" className="hover:text-primary-600">Open Now</Link></li>
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Browse</h4>
+              <ul className="space-y-2 text-sm text-muted">
+                <li><Link href="/colleges" className="hover:text-primary-600 dark:hover:text-primary-400">All Colleges</Link></li>
+                <li><Link href="/colleges?course_levels=UG" className="hover:text-primary-600 dark:hover:text-primary-400">UG Courses</Link></li>
+                <li><Link href="/colleges?course_levels=PG" className="hover:text-primary-600 dark:hover:text-primary-400">PG Courses</Link></li>
+                <li><Link href="/colleges?admission_status=Open" className="hover:text-primary-600 dark:hover:text-primary-400">Open Now</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 mb-3">Tools</h4>
-              <ul className="space-y-2 text-sm text-gray-500">
-                <li><Link href="/recommend" className="hover:text-primary-600">College Finder</Link></li>
-                <li><Link href="/colleges" className="hover:text-primary-600">Compare Colleges</Link></li>
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Tools</h4>
+              <ul className="space-y-2 text-sm text-muted">
+                <li><Link href="/recommend" className="hover:text-primary-600 dark:hover:text-primary-400">College Finder</Link></li>
+                <li><Link href="/colleges" className="hover:text-primary-600 dark:hover:text-primary-400">Compare Colleges</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="font-semibold text-gray-900 mb-3">Support</h4>
-              <ul className="space-y-2 text-sm text-gray-500">
-                <li><a href="#" className="hover:text-primary-600">Help Center</a></li>
-                <li><a href="#" className="hover:text-primary-600">Contact Us</a></li>
+              <h4 className="font-semibold text-gray-900 dark:text-white mb-3">Support</h4>
+              <ul className="space-y-2 text-sm text-muted">
+                <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400">Help Center</a></li>
+                <li><a href="#" className="hover:text-primary-600 dark:hover:text-primary-400">Contact Us</a></li>
               </ul>
             </div>
           </div>
-          <div className="mt-8 pt-8 border-t border-gray-100 text-center text-sm text-gray-400">
+          <div className="mt-8 pt-8 border-t border-gray-100 dark:border-gray-800 text-center text-sm text-gray-400 dark:text-gray-500">
             © 2026 CollegeSathi. Built with ❤️ for first-generation students.
           </div>
         </div>

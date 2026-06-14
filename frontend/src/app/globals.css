@@ -85,6 +85,24 @@
            hover:bg-primary-700 hover:border-primary-700
            transition-all duration-200;
   }
+
+  .page-title {
+    @apply text-3xl font-bold text-gray-900 dark:text-white;
+  }
+
+  .section-title {
+    @apply text-2xl font-bold text-gray-900 dark:text-white;
+  }
+
+  .text-muted {
+    @apply text-gray-500 dark:text-gray-400;
+  }
+
+  .hero-outline-btn {
+    @apply inline-flex items-center justify-center text-lg px-8 py-4 rounded-xl font-semibold
+           border-2 border-white/50 text-white bg-white/10 backdrop-blur-sm
+           hover:bg-white/20 hover:border-white/70 transition-all duration-200 active:scale-95;
+  }
 }
 
 /* Custom scrollbar */
