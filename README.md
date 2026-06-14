@@ -1,4 +1,4 @@
-# Faraway 🎓
+# CollegeSaathi 🎓
 
 **AI-powered college admission tracker for first-generation students in India.**
 
