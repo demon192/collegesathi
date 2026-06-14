@@ -22,6 +22,9 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
+    # JWT spec: "sub" must be a string (python-jose rejects integer subjects)
+    if "sub" in to_encode and to_encode["sub"] is not None:
+        to_encode["sub"] = str(to_encode["sub"])
     expire = datetime.utcnow() + (expires_delta or timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES))
     to_encode.update({"exp": expire})
     return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)

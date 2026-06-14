@@ -60,8 +60,9 @@ export default function CollegeCard({ college }: CollegeCardProps) {
       await api.post('/wishlist/toggle', { college_id: college.id });
       toggleWishlist(college.id);
       toast.success(isWishlisted ? 'Removed from wishlist' : 'Added to wishlist!');
-    } catch {
-      toast.error('Failed to update wishlist');
+    } catch (err: any) {
+      const detail = err.response?.data?.detail;
+      toast.error(detail || 'Failed to update wishlist');
     } finally {
       setWishlistLoading(false);
     }
